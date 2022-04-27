@@ -2,8 +2,7 @@ import urllib.request
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import socket
-
-
+				
 def getRequest(url):
 	listLinks = []
 	i=0
@@ -16,40 +15,51 @@ def getRequest(url):
 		i+=1
 	return listLinks
 
-def getListLinks(url,domainName):
+def getListLinks(url):
 	try:
-		if (bool(urlparse(url).scheme) and bool(urlparse(url).netloc)) == True:
-			return getRequest(url)
-		elif url[0] == '/' and len(url) > 1:
-			absoluteURL = domainName['schemeURL']+'://'+domainName['netlocdURL']+url
-			return getRequest(absoluteURL)
+		return getRequest(url)
 	except urllib.error.URLError as er:
 		print(er)
-		return str(er)
+		return er
 	except ConnectionResetError as er_1:
 		print(er_1)
-		return str(er_1)
+		return er_1
 	except socket.timeout as er_2:
 		print(er_2)
-		return str(er_2)
+		return er_2
+		
+def parentDomain(url):
+	parentURL = urlparse(url)
+	vocabDomain = {'netlocdURL': parentURL.netloc,'schemeURL': parentURL.scheme,
+			'domain_1Level': parentURL.netloc.split('.')[0],'domain_2Level': parentURL.netloc.split('.')[1],
+			'domain_3Level': parentURL.netloc.split('.')[2]}
+	return vocabDomain
 		
 	
-def recUrl(url,set_url,depth,depthParam):
-	if depth == 0:
-		parsedURL = urlparse(url)
-		vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
-				'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
-				'domain_3Level': parsedURL.netloc.split('.')[2]}
-				
-	if depth < depthParam and (url in set_url) == False:
+def recUrl(url,set_url,depth,parentDomain_):
+	if  (url in set_url) == False:
 		set_url.add(url)
 		listLinks = getListLinks(url)
-		if str(type(getListLinks(url))) == "<class 'list'>":
+		if str(type(listLinks)) == "<class 'list'>":
 			i=0
 			for link in listLinks:
 				print(i,url,'depth: '+str(depth),link)
-				recUrl(link,set_url,depth+1,depthParam)
-	
+				if (bool(urlparse(link).scheme) and bool(urlparse(link).netloc)) == True:
+					print(link)
+					link_Domains = parentDomain(link)
+					if (link_Domains['domain_1Level']+'.'+link_Domains['domain_2Level']) == (parentDomain_['domain_1Level']+'.'+parentDomain_['domain_2Level']):
+						recUrl(link,set_url,depth+1,parentDomain_)
+				elif link[0] == '/' and len(link) > 1:
+					absoluteURL = parentDomain_['schemeURL']+'://'+parentDomain_['netlocdURL']+link
+					link_Domains = parentDomain_(absoluteURL)
+					if (link_Domains['domain_1Level']+'.'+link_Domains['domain_2Level']) == (parentDomain_['domain_1Level']+'.'+parentDomain_['domain_2Level']):
+						recUrl(absoluteURL,set_url,depth+1,parentDomain_)
+				
+url = 'http://www.google.com'
+parent_Domain =  parentDomain(url)
+print(parent_Domain)
+recUrl(url,set(),0,parent_Domain)
+"""
 url = 'http://www.google.com'
 #url = 'http://www.crawler-test.com'
 parsedURL = urlparse(url)
@@ -58,7 +68,7 @@ vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
 		'domain_3Level': parsedURL.netloc.split('.')[2]}
 #getListLinks('/intl/ru/policies/terms',vocabDomain)	
 getListLinks('/intl/ru/policies/privacy/',vocabDomain)	
-
+"""
 
 
 #recUrl('http://www.crawler-test.com',set(),0,10)
@@ -83,5 +93,4 @@ soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
 for row in soup.find_all('a',href=True):
 	print(row['href'])
 print(soup.find_all('a',href=True))
-
-	
+"""
