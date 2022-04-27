@@ -3,19 +3,26 @@ from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import socket
 
-def getListLinks(url):
+
+def getRequest(url):
+	listLinks = []
+	i=0
+	resp = urllib.request.urlopen(url, timeout=10)
+	soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
+	for link in soup.find_all('a',href=True):
+#		if (bool(urlparse(link['href']).scheme) and bool(urlparse(link['href']).netloc)) == True:
+		listLinks+=[link['href']]
+		print(i,link['href'])
+		i+=1
+	return listLinks
+
+def getListLinks(url,domainName):
 	try:
-		if (bool(urlparse(url).scheme) and bool(urlparse(url).scheme)) == True:
-			resp = urllib.request.urlopen(url, timeout=10)
-			soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
-			listLinks = []
-			i=0
-			for link in soup.find_all('a',href=True):
-				if (bool(urlparse(link['href']).scheme) and bool(urlparse(link['href']).scheme)) == True:
-					listLinks+=[link['href']]
-					#print(i,link['href'])
-					i+=1
-		return listLinks
+		if (bool(urlparse(url).scheme) and bool(urlparse(url).netloc)) == True:
+			return getRequest(url)
+		elif url[0] == '/' and len(url) > 1:
+			absoluteURL = domainName['schemeURL']+'://'+domainName['netlocdURL']+url
+			return getRequest(absoluteURL)
 	except urllib.error.URLError as er:
 		print(er)
 		return str(er)
@@ -28,6 +35,12 @@ def getListLinks(url):
 		
 	
 def recUrl(url,set_url,depth,depthParam):
+	if depth == 0:
+		parsedURL = urlparse(url)
+		vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
+				'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
+				'domain_3Level': parsedURL.netloc.split('.')[2]}
+				
 	if depth < depthParam and (url in set_url) == False:
 		set_url.add(url)
 		listLinks = getListLinks(url)
@@ -37,5 +50,27 @@ def recUrl(url,set_url,depth,depthParam):
 				print(i,url,'depth: '+str(depth),link)
 				recUrl(link,set_url,depth+1,depthParam)
 		
-recUrl('http://www.google.com',set(),0,3)
+#recUrl('http://www.crawler-test.com',set(),0,10)
+#print(getListLinks('http://www.crawler-test.com'))
+#print(getListLinks('https://www.crawler-test.com//urls/double_slash/disallowed_start'))
+#print(getListLinks('http://www.google.com'))
+#print(urlparse('http://www.google.com').scheme, urlparse('http://www.google.com').netloc)
+#print(str(type(getListLinks('http://www.google.com'))) == "<class 'list'>")
+#print('https://www.youtube.com/?gl=RU&tab=w1'=='https://www.youtube.com/?gl=RU&tab=i1')
+
+parsedURL = urlparse('http://www.crawler-test.com')
+vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
+		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
+		'domain_3Level': parsedURL.netloc.split('.')[2]}
+#getListLinks('/robots_protocol/user_excluded',vocabDomain)
+getListLinks('/links/nofollowed_page',vocabDomain)
+
+
+#resp = urllib.request.urlopen('http://www.crawler-test.com/canonical_tags/canonical_tag/5', timeout=10)
+#soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
+#print(soup.find_all('a',href=True))
+#for row in soup.find_all('a',href=True):
+#	print(row['href'])
+#	print(len(row['href']))
+
 	
