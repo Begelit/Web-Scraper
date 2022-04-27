@@ -49,7 +49,18 @@ def recUrl(url,set_url,depth,depthParam):
 			for link in listLinks:
 				print(i,url,'depth: '+str(depth),link)
 				recUrl(link,set_url,depth+1,depthParam)
-		
+	
+url = 'http://www.google.com'
+#url = 'http://www.crawler-test.com'
+parsedURL = urlparse(url)
+vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
+		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
+		'domain_3Level': parsedURL.netloc.split('.')[2]}
+#getListLinks('/intl/ru/policies/terms',vocabDomain)	
+getListLinks('/intl/ru/policies/privacy/',vocabDomain)	
+
+
+
 #recUrl('http://www.crawler-test.com',set(),0,10)
 #print(getListLinks('http://www.crawler-test.com'))
 #print(getListLinks('https://www.crawler-test.com//urls/double_slash/disallowed_start'))
@@ -58,19 +69,19 @@ def recUrl(url,set_url,depth,depthParam):
 #print(str(type(getListLinks('http://www.google.com'))) == "<class 'list'>")
 #print('https://www.youtube.com/?gl=RU&tab=w1'=='https://www.youtube.com/?gl=RU&tab=i1')
 
-parsedURL = urlparse('http://www.crawler-test.com')
-vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
-		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
-		'domain_3Level': parsedURL.netloc.split('.')[2]}
-#getListLinks('/robots_protocol/user_excluded',vocabDomain)
-getListLinks('/links/nofollowed_page',vocabDomain)
+#parsedURL = urlparse('http://www.crawler-test.com')
+#vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
+#		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
+#		'domain_3Level': parsedURL.netloc.split('.')[2]}
+#
+#getListLinks('/link_on_nofollowed_2',vocabDomain)
 
-
-#resp = urllib.request.urlopen('http://www.crawler-test.com/canonical_tags/canonical_tag/5', timeout=10)
-#soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
+"""
+resp = urllib.request.urlopen('http://www.crawler-test.com/links/nofollowed_page', timeout=10)
+soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
 #print(soup.find_all('a',href=True))
-#for row in soup.find_all('a',href=True):
-#	print(row['href'])
-#	print(len(row['href']))
+for row in soup.find_all('a',href=True):
+	print(row['href'])
+print(soup.find_all('a',href=True))
 
 	
