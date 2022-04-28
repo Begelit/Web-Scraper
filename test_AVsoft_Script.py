@@ -45,15 +45,14 @@ def recUrl_(url,set_url,depth,mainURL,parentURL):
 		else :
 			absoluteURL = 'visited_site'
 	#Проверим ссылку на её относительность
-	elif url[0] == '/' and len(url) > 1:
+	else:
 		if findUrlInSet(url,set_url) == -1:
-			absoluteURL = parentURL+url
+			absoluteURL = urljoin(parentURL,url)
 			set_url.add(absoluteURL)
 		else :
 			absoluteURL = findUrlInSet(url,set_url)
-	else:
-		return
-			
+			set_url.add(absoluteURL)
+
 	if absoluteURL != 'visited_site':
 		#Теперь проверим принадлежит ли имя главного домена с именем посещаемого домена.
 		parsed_mainURL = urlparse(mainURL)
@@ -68,7 +67,9 @@ def recUrl_(url,set_url,depth,mainURL,parentURL):
 						print(depth,parentURL,link)
 						recUrl_(link,set_url,depth+1,mainURL,parentURL)
 		
+
 mainURL = 'http://www.google.com'
 url = 'http://www.google.com'
 parentURL = 'http://www.google.com'
 recUrl_(url,set(),0,mainURL,parentURL)	
+	
