@@ -9,9 +9,8 @@ def getRequest(url):
 	resp = urllib.request.urlopen(url, timeout=10)
 	soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
 	for link in soup.find_all('a',href=True):
-#		if (bool(urlparse(link['href']).scheme) and bool(urlparse(link['href']).netloc)) == True:
 		listLinks+=[link['href']]
-		print(i,link['href'])
+		#print(i,link['href'])
 		i+=1
 	return listLinks
 
@@ -27,70 +26,40 @@ def getListLinks(url):
 	except socket.timeout as er_2:
 		print(er_2)
 		return er_2
-		
-def parentDomain(url):
-	parentURL = urlparse(url)
-	vocabDomain = {'netlocdURL': parentURL.netloc,'schemeURL': parentURL.scheme,
-			'domain_1Level': parentURL.netloc.split('.')[0],'domain_2Level': parentURL.netloc.split('.')[1],
-			'domain_3Level': parentURL.netloc.split('.')[2]}
-	return vocabDomain
-		
-	
-def recUrl(url,set_url,depth,parentDomain_):
-	if  (url in set_url) == False:
-		set_url.add(url)
-		listLinks = getListLinks(url)
-		if str(type(listLinks)) == "<class 'list'>":
-			i=0
-			for link in listLinks:
-				print(i,url,'depth: '+str(depth),link)
-				if (bool(urlparse(link).scheme) and bool(urlparse(link).netloc)) == True:
-					print(link)
-					link_Domains = parentDomain(link)
-					if (link_Domains['domain_1Level']+'.'+link_Domains['domain_2Level']) == (parentDomain_['domain_1Level']+'.'+parentDomain_['domain_2Level']):
-						recUrl(link,set_url,depth+1,parentDomain_)
-				elif link[0] == '/' and len(link) > 1:
-					absoluteURL = parentDomain_['schemeURL']+'://'+parentDomain_['netlocdURL']+link
-					link_Domains = parentDomain_(absoluteURL)
-					if (link_Domains['domain_1Level']+'.'+link_Domains['domain_2Level']) == (parentDomain_['domain_1Level']+'.'+parentDomain_['domain_2Level']):
-						recUrl(absoluteURL,set_url,depth+1,parentDomain_)
-				
+
+def recUrl_(url,set_url,depth,mainURL,parentURL):
+	#На вход функции поступает ссылка url. Определим на раннем этапе её абсолютность.
+	if (bool(urlparse(url).scheme) and bool(urlparse(url).netloc)) == True:
+		#Если ссылка абсолютна, проверим её на наличие в проверочном множестве посещенных ссылок set_url
+		if  (url in set_url) == False:
+			#Заносим ссылку в множество set_url посещенных ссылок 
+			set_url.add(url)
+			absoluteURL = url
+		else :
+			absoluteURL = 'visited_site'
+	#Проверим ссылку на её относительность
+	elif url[0] == '/' and len(url) > 1:
+		absoluteURL_ = parentURL+url
+		if  (absoluteURL_ in set_url) == False:
+			absoluteURL = absoluteURL_
+		else :
+			absoluteURL = 'visited_site'
+			
+	if absoluteURL != 'visited_site':
+		#Теперь проверим принадлежит ли имя главного домена с именем посещаемого домена.
+		parsed_mainURL = urlparse(mainURL)
+		parsed_absoluteURL = urlparse(absoluteURL)
+		if parsed_mainURL.netloc == parsed_absoluteURL.netloc:
+			#Если принадлежит, то можно совершать HTTP запрос
+			linkList = getListLinks(absoluteURL)
+			parentURL = absoluteURL
+			if str(type(linkList)) == "<class 'list'>":
+				for link in linkList:
+					print(depth,parentURL,link)
+					recUrl_(link,set_url,depth+1,mainURL,parentURL)
+
+#url = 'http://www.google.com'
+mainURL = 'http://www.google.com'
 url = 'http://www.google.com'
-parent_Domain =  parentDomain(url)
-print(parent_Domain)
-recUrl(url,set(),0,parent_Domain)
-"""
-url = 'http://www.google.com'
-#url = 'http://www.crawler-test.com'
-parsedURL = urlparse(url)
-vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
-		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
-		'domain_3Level': parsedURL.netloc.split('.')[2]}
-#getListLinks('/intl/ru/policies/terms',vocabDomain)	
-getListLinks('/intl/ru/policies/privacy/',vocabDomain)	
-"""
-
-
-#recUrl('http://www.crawler-test.com',set(),0,10)
-#print(getListLinks('http://www.crawler-test.com'))
-#print(getListLinks('https://www.crawler-test.com//urls/double_slash/disallowed_start'))
-#print(getListLinks('http://www.google.com'))
-#print(urlparse('http://www.google.com').scheme, urlparse('http://www.google.com').netloc)
-#print(str(type(getListLinks('http://www.google.com'))) == "<class 'list'>")
-#print('https://www.youtube.com/?gl=RU&tab=w1'=='https://www.youtube.com/?gl=RU&tab=i1')
-
-#parsedURL = urlparse('http://www.crawler-test.com')
-#vocabDomain = {'netlocdURL': parsedURL.netloc,'schemeURL': parsedURL.scheme,
-#		'domain_1Level': parsedURL.netloc.split('.')[0],'domain_2Level': parsedURL.netloc.split('.')[1],
-#		'domain_3Level': parsedURL.netloc.split('.')[2]}
-#
-#getListLinks('/link_on_nofollowed_2',vocabDomain)
-
-"""
-resp = urllib.request.urlopen('http://www.crawler-test.com/links/nofollowed_page', timeout=10)
-soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
-#print(soup.find_all('a',href=True))
-for row in soup.find_all('a',href=True):
-	print(row['href'])
-print(soup.find_all('a',href=True))
-"""
+parentURL = 'http://www.google.com'
+recUrl_(url,set(),0,mainURL,parentURL)	
