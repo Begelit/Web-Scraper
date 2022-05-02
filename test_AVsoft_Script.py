@@ -3,8 +3,11 @@ from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import socket
 import multiprocessing
+import time
+
 set_url = set()
 vocab_tree = {}
+sum_url = 1
 
 class Web_Crawler(object):
 	@staticmethod
@@ -56,8 +59,10 @@ class Web_Crawler(object):
 	@staticmethod
 	def create_tree(response):
 		global vocab_tree
+		global sum_url
 		for row in response:
 			if row != None:
+				sum_url+=len(list(set(row[0])))
 				vocab_tree[str(row[2])+'_level'][row[1]] = list(set(row[0]))
 	@staticmethod
 	def recUrl_(url,mainURL,parentURL,level):
@@ -79,6 +84,8 @@ class Web_Crawler(object):
 	def multiproc_method(url,mainURL,parentURL,path):
 		if __name__ == "__main__":
 			global vocab_tree
+			global sum_url
+			t_start = time.time()
 			level = 1
 			vocab_tree['1_level'] = {}
 			with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
@@ -92,8 +99,8 @@ class Web_Crawler(object):
 				else:
 					vocab_tree[str(level)+'_level'] = {}
 					for link in vocab_tree[str(level-1)+'_level'].keys():
-						print('-----',link,'-----')
-						print('-----',str(level-1)+'_level','-----')
+						print('\n-----',link,'-----','time:',time.time()-t_start,'seconds','-----')
+						print('-----',str(level-1)+'_level','-----','sum_links:',sum_url,'-----','')
 						print(vocab_tree[str(level-1)+'_level'][link])
 						arg_list = []
 						for url in vocab_tree[str(level-1)+'_level'][link]:
