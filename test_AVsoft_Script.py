@@ -2,7 +2,10 @@ import urllib.request
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import socket
-				
+import multiprocessing
+set_url = set()
+vocab_tree = {}
+
 def getRequest(url):
 	listLinks = []
 	i=0
@@ -26,33 +29,43 @@ def getListLinks(url):
 	except socket.timeout as er_2:
 		print(er_2)
 		return er_2
-	
-def findUrlInSet(url,set_url):
-	for link in set_url:
-		findIndex = link.find(url)
-		if findIndex > -1:
-			return 'visited_site'
-	return findIndex
+	except UnicodeEncodeError as er_3:
+		print(er_3)
+		return er_3
 
-def recUrl_(url,set_url,depth,mainURL,parentURL):
-	#На вход функции поступает ссылка url. Определим на раннем этапе её абсолютность.
+def return_absoluteURL(parentURL,url):
+	global set_url
+		#На вход функции поступает ссылка url. Определим на раннем этапе её абсолютность.
 	if (bool(urlparse(url).scheme) and bool(urlparse(url).netloc)) == True:
 		#Если ссылка абсолютна, проверим её на наличие в проверочном множестве посещенных ссылок set_url
 		if  (url in set_url) == False:
 			#Заносим ссылку в множество set_url посещенных ссылок 
 			set_url.add(url)
-			absoluteURL = url
+			return url
 		else :
-			absoluteURL = 'visited_site'
+			return 'visited_site'
 	#Проверим ссылку на её относительность
 	else:
-		if findUrlInSet(url,set_url) == -1:
-			absoluteURL = urljoin(parentURL,url)
-			set_url.add(absoluteURL)
+		if (urljoin(parentURL,url) in set_url) == True:
+			return ' visited_site'
 		else :
-			absoluteURL = findUrlInSet(url,set_url)
-			set_url.add(absoluteURL)
+			set_url.add(urljoin(parentURL,url))
+			return urljoin(parentURL,url)
 
+
+def create_tree(response):
+	global vocab_tree
+#	vocab_tree[str(response[0][2])+'_level'].append({response[0][1]:list(set(response[0][0]))})
+	for row in response:
+		if row != None:
+			vocab_tree[str(row[2])+'_level'].append({row[1]:list(set(row[0]))})
+#			print(row)
+#	print(response,'\n')
+	
+def recUrl_(url,mainURL,parentURL,level):
+	global set_url
+	global vocab_tree
+	absoluteURL = return_absoluteURL(parentURL,url)	
 	if absoluteURL != 'visited_site':
 		#Теперь проверим принадлежит ли имя главного домена с именем посещаемого домена.
 		parsed_mainURL = urlparse(mainURL)
@@ -63,13 +76,37 @@ def recUrl_(url,set_url,depth,mainURL,parentURL):
 			if absoluteURL.rfind('http') <= 0 and absoluteURL.rfind('https') <= 0:
 				linkList = getListLinks(parentURL)
 				if str(type(linkList)) == "<class 'list'>":
-					for link in linkList:
-						print(depth,parentURL,link)
-						recUrl_(link,set_url,depth+1,mainURL,parentURL)
+#					print(linkList)
+#					vocab_tree[str(level)+'_level'].append({absoluteURL:list(set(linkList))})
+#					print(linkList)
+#					print()
+					return list(set(linkList)), absoluteURL, level
+#					for link in linkList:
+#						print(depth,parentURL,link)
+#						recUrl_(link,depth+1,mainURL,parentURL)
 		
-
-mainURL = 'http://www.google.com'
-url = 'http://www.google.com'
-parentURL = 'http://www.google.com'
-recUrl_(url,set(),0,mainURL,parentURL)	
+if __name__ == "__main__":
+	mainURL = 'http://www.google.com'
+	url = 'http://www.google.com'
+	parentURL = 'http://www.google.com'
+	level = 1
+	vocab_tree['1_level'] = []
+	with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+		p.starmap_async(recUrl_,[('http://www.google.com','http://www.google.com','http://www.google.com',level)],callback=create_tree)
+		p.close()
+		p.join()
+	print(vocab_tree)
+	secon_list = vocab_tree['1_level'][0]['http://www.google.com']
+	print(secon_list)
+	
+	arg_list = []
+	vocab_tree['2_level'] = []
+	for url_flist in secon_list:
+		arg_list+=[(url_flist,mainURL,url,level+1)]
+	print(arg_list)
+	with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+		p.starmap_async(recUrl_,arg_list,callback=create_tree)
+		p.close()
+		p.join()
+	print(vocab_tree)
 	
