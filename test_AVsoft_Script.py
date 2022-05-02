@@ -5,7 +5,7 @@ import socket
 import multiprocessing
 set_url = set()
 vocab_tree = {}
-
+#class Web_Crawler:
 def getRequest(url):
 	listLinks = []
 	i=0
@@ -77,32 +77,35 @@ def recUrl_(url,mainURL,parentURL,level):
 
 					return list(set(linkList)), absoluteURL, level
 
-		
+def multiproc_method(url,mainURL,parentURL,path):
+	if __name__ == "__main__":
+		global vocab_tree
+		level = 1
+		vocab_tree['1_level'] = {}
+		with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+			p.starmap_async(recUrl_,[(url,mainURL,parentURL,level)],callback=create_tree)
+			p.close()
+			p.join()
+		while True:
+			level+=1
+			if not vocab_tree[str(level-1)+'_level']:
+				break
+			else:
+				vocab_tree[str(level)+'_level'] = {}
+				for link in vocab_tree[str(level-1)+'_level'].keys():
+					print('-----',link,'-----')
+					print('-----',str(level-1)+'_level','-----')
+					print(vocab_tree[str(level-1)+'_level'][link])
+					arg_list = []
+					for url in vocab_tree[str(level-1)+'_level'][link]:
+						arg_list+=[(url,mainURL,link,level)]
+					with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+						p.starmap_async(recUrl_,arg_list,callback=create_tree)
+						p.close()
+						p.join()
 if __name__ == "__main__":
 	mainURL = 'http://www.google.com'
 	url = 'http://www.google.com'
 	parentURL = 'http://www.google.com'
-	level = 1
-	vocab_tree['1_level'] = {}
-	with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-		p.starmap_async(recUrl_,[('http://www.google.com','http://www.google.com','http://www.google.com',level)],callback=create_tree)
-		p.close()
-		p.join()
-	while True:
-		level+=1
-		if not vocab_tree[str(level-1)+'_level']:
-			break
-		else:
-			vocab_tree[str(level)+'_level'] = {}
-			for link in vocab_tree[str(level-1)+'_level'].keys():
-				print('-----',link,'-----')
-				print('-----',str(level-1)+'_level','-----')
-				print(vocab_tree[str(level-1)+'_level'][link])
-				arg_list = []
-				for url in vocab_tree[str(level-1)+'_level'][link]:
-					arg_list+=[(url,mainURL,link,level)]
-				with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-					p.starmap_async(recUrl_,arg_list,callback=create_tree)
-					p.close()
-					p.join()
-	
+	path = '/home/koza/projects/testABS'
+	multiproc_method(url,mainURL,parentURL,path)
