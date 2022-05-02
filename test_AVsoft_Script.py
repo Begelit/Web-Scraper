@@ -55,12 +55,10 @@ def return_absoluteURL(parentURL,url):
 
 def create_tree(response):
 	global vocab_tree
-#	vocab_tree[str(response[0][2])+'_level'].append({response[0][1]:list(set(response[0][0]))})
 	for row in response:
 		if row != None:
-			vocab_tree[str(row[2])+'_level'].append({row[1]:list(set(row[0]))})
-#			print(row)
-#	print(response,'\n')
+			vocab_tree[str(row[2])+'_level'][row[1]] = list(set(row[0]))
+
 	
 def recUrl_(url,mainURL,parentURL,level):
 	global set_url
@@ -76,37 +74,32 @@ def recUrl_(url,mainURL,parentURL,level):
 			if absoluteURL.rfind('http') <= 0 and absoluteURL.rfind('https') <= 0:
 				linkList = getListLinks(parentURL)
 				if str(type(linkList)) == "<class 'list'>":
-#					print(linkList)
-#					vocab_tree[str(level)+'_level'].append({absoluteURL:list(set(linkList))})
-#					print(linkList)
-#					print()
+
 					return list(set(linkList)), absoluteURL, level
-#					for link in linkList:
-#						print(depth,parentURL,link)
-#						recUrl_(link,depth+1,mainURL,parentURL)
+
 		
 if __name__ == "__main__":
 	mainURL = 'http://www.google.com'
 	url = 'http://www.google.com'
 	parentURL = 'http://www.google.com'
 	level = 1
-	vocab_tree['1_level'] = []
+	vocab_tree['1_level'] = {}
 	with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
 		p.starmap_async(recUrl_,[('http://www.google.com','http://www.google.com','http://www.google.com',level)],callback=create_tree)
 		p.close()
 		p.join()
-	print(vocab_tree)
-	secon_list = vocab_tree['1_level'][0]['http://www.google.com']
-	print(secon_list)
-	
-	arg_list = []
-	vocab_tree['2_level'] = []
-	for url_flist in secon_list:
-		arg_list+=[(url_flist,mainURL,url,level+1)]
-	print(arg_list)
-	with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-		p.starmap_async(recUrl_,arg_list,callback=create_tree)
-		p.close()
-		p.join()
-	print(vocab_tree)
+	while True:
+		level+=1
+		vocab_tree[str(level)+'_level'] = {}
+		for link in vocab_tree[str(level-1)+'_level'].keys():
+			print('-----',link,'-----')
+			print('-----',str(level-1)+'_level','-----')
+			print(vocab_tree[str(level-1)+'_level'][link])
+			arg_list = []
+			for url in vocab_tree[str(level-1)+'_level'][link]:
+				arg_list+=[(url,mainURL,link,level)]
+			with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+				p.starmap_async(recUrl_,arg_list,callback=create_tree)
+				p.close()
+				p.join()
 	
