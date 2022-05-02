@@ -10,7 +10,7 @@ def getRequest(url):
 	listLinks = []
 	i=0
 	resp = urllib.request.urlopen(url, timeout=10)
-	soup = BeautifulSoup(resp, from_encoding=resp.info().get_param('charset'))
+	soup = BeautifulSoup(resp,'lxml', from_encoding=resp.info().get_param('charset'))
 	for link in soup.find_all('a',href=True):
 		listLinks+=[link['href']]
 		#print(i,link['href'])
@@ -21,16 +21,16 @@ def getListLinks(url):
 	try:
 		return getRequest(url)
 	except urllib.error.URLError as er:
-		print(er)
+		print(er,'----->',url)
 		return er
 	except ConnectionResetError as er_1:
-		print(er_1)
+		print(er_1,'----->',url)
 		return er_1
 	except socket.timeout as er_2:
-		print(er_2)
+		print(er_2,'----->',url)
 		return er_2
 	except UnicodeEncodeError as er_3:
-		print(er_3)
+		print(er_3,'----->',url)
 		return er_3
 
 def return_absoluteURL(parentURL,url):
@@ -90,16 +90,19 @@ if __name__ == "__main__":
 		p.join()
 	while True:
 		level+=1
-		vocab_tree[str(level)+'_level'] = {}
-		for link in vocab_tree[str(level-1)+'_level'].keys():
-			print('-----',link,'-----')
-			print('-----',str(level-1)+'_level','-----')
-			print(vocab_tree[str(level-1)+'_level'][link])
-			arg_list = []
-			for url in vocab_tree[str(level-1)+'_level'][link]:
-				arg_list+=[(url,mainURL,link,level)]
-			with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-				p.starmap_async(recUrl_,arg_list,callback=create_tree)
-				p.close()
-				p.join()
+		if not vocab_tree[str(level-1)+'_level']:
+			break
+		else:
+			vocab_tree[str(level)+'_level'] = {}
+			for link in vocab_tree[str(level-1)+'_level'].keys():
+				print('-----',link,'-----')
+				print('-----',str(level-1)+'_level','-----')
+				print(vocab_tree[str(level-1)+'_level'][link])
+				arg_list = []
+				for url in vocab_tree[str(level-1)+'_level'][link]:
+					arg_list+=[(url,mainURL,link,level)]
+				with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
+					p.starmap_async(recUrl_,arg_list,callback=create_tree)
+					p.close()
+					p.join()
 	
