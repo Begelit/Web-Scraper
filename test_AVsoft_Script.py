@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import socket
 import multiprocessing
 import time
+import os
+import pandas as pd
 
 set_url = set()
 vocab_tree = {}
@@ -62,10 +64,15 @@ class Web_Crawler(object):
 		global sum_url
 		for row in response:
 			if row != None:
+#				print(row)
 				sum_url+=len(list(set(row[0])))
-				vocab_tree[str(row[2])+'_level'][row[1]] = {'list':list(set(row[0])),'id':row[4],'parentId':row[3]}
+				vocab_tree[str(row[2])+'_level'][row[1]] = {'list':list(set(row[0])),'id':row[4],
+															'parentId':row[3]}
+				if bool(os.path.exists(row[5]+'/'+'id-'+str(row[4])+'_'+'parentId-'+str(row[3])+'.csv')) == False:
+					df = pd.DataFrame({row[1]:list(set(row[0]))})
+					df.to_csv(row[5]+'/'+'id-'+str(row[4])+'_'+'parentId-'+str(row[3])+'.csv')
 	@staticmethod
-	def recUrl_(url,mainURL,parentURL,level,parent_id,id_):
+	def recUrl_(url,mainURL,parentURL,level,parent_id,id_,nameLevelDir):
 		global set_url
 		global vocab_tree
 		absoluteURL = Web_Crawler.return_absoluteURL(parentURL,url)	
@@ -79,7 +86,7 @@ class Web_Crawler(object):
 				if absoluteURL.rfind('http') <= 0 and absoluteURL.rfind('https') <= 0:
 					linkList = Web_Crawler.getListLinks(parentURL)
 					if str(type(linkList)) == "<class 'list'>":
-						return list(set(linkList)), absoluteURL, level, parent_id, id_
+						return list(set(linkList)), absoluteURL, level, parent_id, id_, nameLevelDir
 	@staticmethod
 	def multiproc_method(url,mainURL,parentURL,path):
 		if __name__ == "__main__":
@@ -90,15 +97,27 @@ class Web_Crawler(object):
 			vocab_tree['1_level'] = {}
 			id_ = '1'
 			parent_id = '0'
+			
+			nameMainDir = urlparse(mainURL).netloc.split('.')[1]
+			if bool(os.path.exists(path+'/'+nameMainDir)) == False:
+				os.mkdir(path+'/'+nameMainDir)
+			mainDirPath = path+'/'+nameMainDir
+			if bool(os.path.exists(mainDirPath+'/'+str(level)+'_level')) == False:
+				os.mkdir(mainDirPath+'/'+str(level)+'_level')
+			nameLevelDir = mainDirPath+'/'+str(level)+'_level'
 			with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-				p.starmap_async(Web_Crawler.recUrl_,[(url,mainURL,parentURL,level,parent_id,id_)],callback=Web_Crawler.create_tree)
+				p.starmap_async(Web_Crawler.recUrl_,[(url,mainURL,parentURL,level,parent_id,id_,nameLevelDir)],callback=Web_Crawler.create_tree)
 				p.close()
 				p.join()
+				
 			while True:
 				level+=1
 				if not vocab_tree[str(level-1)+'_level']:
 					break
 				else:
+					nameLevelDir = mainDirPath+'/'+str(level)+'_level'
+					if bool(os.path.exists(nameLevelDir)) == False:
+						os.mkdir(nameLevelDir)
 					vocab_tree[str(level)+'_level'] = {}
 					for link in vocab_tree[str(level-1)+'_level'].keys():
 						print('\n-----',link,'-----','time:',time.time()-t_start,'seconds','-----')
@@ -107,7 +126,7 @@ class Web_Crawler(object):
 						arg_list = []
 						id_ = 1
 						for url in vocab_tree[str(level-1)+'_level'][link]['list']:
-							arg_list+=[(url,mainURL,link,level,vocab_tree[str(level-1)+'_level'][link]['id'],id_)]
+							arg_list+=[(url,mainURL,link,level,vocab_tree[str(level-1)+'_level'][link]['id'],id_,nameLevelDir)]
 							id_+=1
 						with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
 							p.starmap_async(Web_Crawler.recUrl_,arg_list,callback=Web_Crawler.create_tree)
