@@ -63,9 +63,9 @@ class Web_Crawler(object):
 		for row in response:
 			if row != None:
 				sum_url+=len(list(set(row[0])))
-				vocab_tree[str(row[2])+'_level'][row[1]] = list(set(row[0]))
+				vocab_tree[str(row[2])+'_level'][row[1]] = {'list':list(set(row[0])),'id':row[4],'parentId':row[3]}
 	@staticmethod
-	def recUrl_(url,mainURL,parentURL,level):
+	def recUrl_(url,mainURL,parentURL,level,parent_id,id_):
 		global set_url
 		global vocab_tree
 		absoluteURL = Web_Crawler.return_absoluteURL(parentURL,url)	
@@ -79,7 +79,7 @@ class Web_Crawler(object):
 				if absoluteURL.rfind('http') <= 0 and absoluteURL.rfind('https') <= 0:
 					linkList = Web_Crawler.getListLinks(parentURL)
 					if str(type(linkList)) == "<class 'list'>":
-						return list(set(linkList)), absoluteURL, level
+						return list(set(linkList)), absoluteURL, level, parent_id, id_
 	@staticmethod
 	def multiproc_method(url,mainURL,parentURL,path):
 		if __name__ == "__main__":
@@ -88,8 +88,10 @@ class Web_Crawler(object):
 			t_start = time.time()
 			level = 1
 			vocab_tree['1_level'] = {}
+			id_ = '1'
+			parent_id = '0'
 			with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
-				p.starmap_async(Web_Crawler.recUrl_,[(url,mainURL,parentURL,level)],callback=Web_Crawler.create_tree)
+				p.starmap_async(Web_Crawler.recUrl_,[(url,mainURL,parentURL,level,parent_id,id_)],callback=Web_Crawler.create_tree)
 				p.close()
 				p.join()
 			while True:
@@ -103,16 +105,17 @@ class Web_Crawler(object):
 						print('-----',str(level-1)+'_level','-----','sum_links:',sum_url,'-----','')
 						print(vocab_tree[str(level-1)+'_level'][link])
 						arg_list = []
-						for url in vocab_tree[str(level-1)+'_level'][link]:
-							arg_list+=[(url,mainURL,link,level)]
+						id_ = 1
+						for url in vocab_tree[str(level-1)+'_level'][link]['list']:
+							arg_list+=[(url,mainURL,link,level,vocab_tree[str(level-1)+'_level'][link]['id'],id_)]
+							id_+=1
 						with multiprocessing.Pool(multiprocessing.cpu_count()*3) as p:
 							p.starmap_async(Web_Crawler.recUrl_,arg_list,callback=Web_Crawler.create_tree)
 							p.close()
 							p.join()
-	
 if __name__ == "__main__":
 	mainURL = 'http://www.google.com'
 	url = 'http://www.google.com'
 	parentURL = 'http://www.google.com'
 	path = '/home/koza/projects/testABS'
-	print(Web_Crawler.multiproc_method(url,mainURL,parentURL,path))
+	Web_Crawler.multiproc_method(url,mainURL,parentURL,path)
