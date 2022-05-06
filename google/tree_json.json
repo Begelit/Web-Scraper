@@ -1,6 +1,6 @@
 {
    "1_level": {
-      "http://google.ru": {
+      "http://google.com": {
          "id": "1",
          "list": [
             "http://www.google.ru/imghp?hl=ru&tab=wi",
@@ -13,11 +13,11 @@
             "https://www.google.ru/intl/ru/about/products?tab=wh",
             "http://www.google.ru/history/optout?hl=ru",
             "/preferences?hl=ru",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.ru/&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.com/&ec=GAZAAQ",
             "/advanced_search?hl=ru&authuser=0",
             "http://www.google.ru/intl/ru/services/",
             "/intl/ru/about.html",
-            "http://www.google.ru/setprefdomain?prefdom=US&sig=K_-k3nxUjLqeTjISek9y15ktoPVy4%3D",
+            "http://www.google.com/setprefdomain?prefdom=RU&prev=http://www.google.ru/&sig=K__9VOAT2cL11QFrmJUSegR53Z5a0%3D",
             "/intl/ru/policies/privacy/",
             "/intl/ru/policies/terms/"
          ],
@@ -25,12 +25,12 @@
       }
    },
    "2_level": {
-      "http://google.ru/advanced_search?hl=ru&authuser=0": {
+      "http://google.com/advanced_search?hl=ru&authuser=0": {
          "id": 12,
          "list": [
             "/webhp?tab=ww",
             "https://www.google.ru/intl/ru/about/products?tab=wh",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.ru/advanced_search%3Fhl%3Dru%26authuser%3D0&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/advanced_search%3Fhl%3Dru%26authuser%3D0&ec=GAZAAQ",
             "/webhp?tab=ww",
             "https://support.google.com/websearch?p=adv_safesearch&hl=ru",
             "https://support.google.com/websearch?p=adv_safesearch&hl=ru",
@@ -39,13 +39,13 @@
             "https://support.google.com/websearch?p=adv_pages_visited&hl=ru",
             "https://support.google.com/websearch?p=adv_operators&hl=ru",
             "/preferences?hl=ru",
-            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj0oc2b4cn3AhXHwosKHQq6DVoQ8KwCCAI&usg=AOvVaw1r7a_CUJeX-A9xC5SpoOqY",
-            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj0oc2b4cn3AhXHwosKHQq6DVoQ8awCCAM&usg=AOvVaw3xKxz_i1EaY6bm3iSXOHb9",
-            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj0oc2b4cn3AhXHwosKHQq6DVoQ8qwCCAQ&usg=AOvVaw1BJlUjcinwK72SXZXvL2zj"
+            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjnmovwyMr3AhWHrosKHXfLDVYQ8KwCCAI&usg=AOvVaw2L_JRty5T5wHgAVz31SYVQ",
+            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjnmovwyMr3AhWHrosKHXfLDVYQ8awCCAM&usg=AOvVaw1OV-j1WbUVc2mvpoXSMK90",
+            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjnmovwyMr3AhWHrosKHXfLDVYQ8qwCCAQ&usg=AOvVaw0c85hnVrFJlfmqM7JILSQx"
          ],
          "parent_id": "1"
       },
-      "http://google.ru/intl/ru/about.html": {
+      "http://google.com/intl/ru/about.html": {
          "id": 14,
          "list": [
             "#content",
@@ -93,55 +93,55 @@
          ],
          "parent_id": "1"
       },
-      "http://google.ru/intl/ru/policies/privacy/": {
+      "http://google.com/intl/ru/policies/privacy/": {
          "id": 16,
          "list": [
             "https://policies.google.com/privacy?hl=ru"
          ],
          "parent_id": "1"
       },
-      "http://google.ru/intl/ru/policies/terms/": {
+      "http://google.com/intl/ru/policies/terms/": {
          "id": 17,
          "list": [
             "https://policies.google.com/terms?hl=ru"
          ],
          "parent_id": "1"
       },
-      "http://google.ru/preferences?hl=ru": {
+      "http://google.com/preferences?hl=ru": {
          "id": 10,
          "list": [
             "/webhp?tab=ww",
             "https://www.google.ru/intl/ru/about/products?tab=wh",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.ru/preferences%3Fhl%3Dru&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/preferences%3Fhl%3Dru&ec=GAZAAQ",
             "/webhp?tab=ww",
             "/support/websearch?p=ws_cookies_notif&hl=ru",
             "#",
             "#languages",
             "https://support.google.com/websearch?p=search_help&hl=ru",
-            "/safesearch?hl=ru&prev=https://www.google.ru/preferences?hl%3Dru",
+            "/safesearch?hl=ru&prev=https://www.google.com/preferences?hl%3Dru",
             "/history/optout?hl=ru",
             "https://support.google.com/accounts/answer/61416?hl=ru",
-            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj3yc2b4cn3AhXvk4sKHRe8CGAQ8KwCCAM&usg=AOvVaw2tDWe-_j99cC8HVhUno4vJ",
-            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj3yc2b4cn3AhXvk4sKHRe8CGAQ8awCCAQ&usg=AOvVaw0A7om0WLOb80nRSLVEY-7I",
-            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj3yc2b4cn3AhXvk4sKHRe8CGAQ8qwCCAU&usg=AOvVaw210V8bEbwtCvYTTvy4dlWT"
+            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjO2YPwyMr3AhWUy4sKHQV3CJUQ8KwCCAM&usg=AOvVaw3k1cnsW6cTFwFxFyd0wIAk",
+            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjO2YPwyMr3AhWUy4sKHQV3CJUQ8awCCAQ&usg=AOvVaw104rfC5TPuc7pOFs5j6S9O",
+            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwjO2YPwyMr3AhWUy4sKHQV3CJUQ8qwCCAU&usg=AOvVaw0P-udPavHHA02l5g-faEB_"
          ],
          "parent_id": "1"
       }
    },
    "3_level": {
-      "http://google.ru/history/optout?hl=ru": {
+      "http://google.com/history/optout?hl=ru": {
          "id": 68,
          "list": [
             "/",
             "https://www.google.ru/intl/ru/about/products",
-            "https://accounts.google.com/ServiceLogin?passive=1209600&continue=https://www.google.ru/history/optout?hl%3Dru%26nzb%3D1&followup=https://www.google.ru/history/optout?hl%3Dru%26nzb%3D1&hl=ru&ec=GAZAjQI",
+            "https://accounts.google.com/ServiceLogin?passive=1209600&continue=https://www.google.com/history/optout?hl%3Dru%26nzb%3D1&followup=https://www.google.com/history/optout?hl%3Dru%26nzb%3D1&hl=ru&ec=GAZAjQI",
             "/",
             "https://support.google.com/accounts/answer/61416?authuser=0&hl=ru",
             "https://accounts.google.com/login?hl=ru"
          ],
          "parent_id": 10
       },
-      "http://google.ru/intl/ru/": {
+      "http://google.com/intl/ru/": {
          "id": 16,
          "list": [
             "https://www.google.ru/imghp?hl=ru&tab=wi",
@@ -154,17 +154,17 @@
             "https://www.google.ru/intl/ru/about/products?tab=wh",
             "http://www.google.ru/history/optout?hl=ru",
             "/preferences?hl=ru",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.ru/%3Fhl%3Dru&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/%3Fhl%3Dru&ec=GAZAAQ",
             "/advanced_search?hl=ru&authuser=0",
             "http://www.google.ru/intl/ru/services/",
             "/intl/ru/about.html",
-            "https://www.google.ru/setprefdomain?prefdom=US&sig=K_Av_3fSf9EiNbaYjsFXg6Kyh_lb0%3D",
+            "https://www.google.com/setprefdomain?prefdom=RU&prev=https://www.google.ru/&sig=K_UdTZUMe7eYgnyOAmTxyx1VZYiE0%3D",
             "/intl/ru/policies/privacy/",
             "/intl/ru/policies/terms/"
          ],
          "parent_id": 14
       },
-      "http://google.ru/intl/ru/about.html#content": {
+      "http://google.com/intl/ru/about.html#content": {
          "id": 15,
          "list": [
             "#content",
@@ -212,34 +212,34 @@
          ],
          "parent_id": 14
       },
-      "http://google.ru/preferences?hl=ru#languages": {
+      "http://google.com/preferences?hl=ru#languages": {
          "id": 65,
          "list": [
             "/webhp?tab=ww",
             "https://www.google.ru/intl/ru/about/products?tab=wh",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.ru/preferences%3Fhl%3Dru&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=https://www.google.com/preferences%3Fhl%3Dru&ec=GAZAAQ",
             "/webhp?tab=ww",
             "/support/websearch?p=ws_cookies_notif&hl=ru",
             "#",
             "#languages",
             "https://support.google.com/websearch?p=search_help&hl=ru",
-            "/safesearch?hl=ru&prev=https://www.google.ru/preferences?hl%3Dru",
+            "/safesearch?hl=ru&prev=https://www.google.com/preferences?hl%3Dru",
             "/history/optout?hl=ru",
             "https://support.google.com/accounts/answer/61416?hl=ru",
-            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwiO6Mec4cn3AhWVyIsKHdRaDMsQ8KwCCAM&usg=AOvVaw12t0r7MS-C6LMsm7SQj9g3",
-            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwiO6Mec4cn3AhWVyIsKHdRaDMsQ8awCCAQ&usg=AOvVaw3rY4B1qQBa1OvKBqKasOJ-",
-            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwiO6Mec4cn3AhWVyIsKHdRaDMsQ8qwCCAU&usg=AOvVaw1I5Dk8SJ9_wAIl4hKpJ6a4"
+            "/url?q=https://support.google.com/websearch/%3Fp%3Dws_results_help%26hl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj77IDxyMr3AhXulIsKHct7DPwQ8KwCCAM&usg=AOvVaw2ycFF_A4HDzNck2T2fyPlu",
+            "/url?q=https://policies.google.com/privacy%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj77IDxyMr3AhXulIsKHct7DPwQ8awCCAQ&usg=AOvVaw3J_-ntPkYdTAL07H-KWnMu",
+            "/url?q=https://policies.google.com/terms%3Fhl%3Dru%26fg%3D1&sa=U&ved=0ahUKEwj77IDxyMr3AhXulIsKHct7DPwQ8qwCCAU&usg=AOvVaw3XG__EO-9Ce9epVQPRpQfx"
          ],
          "parent_id": 10
       },
-      "http://google.ru/support/websearch?p=ws_cookies_notif&hl=ru": {
+      "http://google.com/support/websearch?p=ws_cookies_notif&hl=ru": {
          "id": 63,
          "list": [
             "#hcfe-content",
             "/?tab=uu",
             "/accounts",
             "https://www.google.ru/intl/ru/about/products?tab=uh",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://support.google.com/accounts/answer/61416%3Fhl%3Dru%26visit_id%3D637873986006776579-2587654661%26p%3Dws_cookies_notif%26rd%3D1&ec=GAZAdQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://support.google.com/accounts/answer/61416%3Fhl%3Dru%26visit_id%3D637874264266745383-3760000893%26p%3Dws_cookies_notif%26rd%3D1&ec=GAZAdQ",
             "/?tab=uu",
             "/",
             "/accounts/?hl=ru",
@@ -256,9 +256,9 @@
             "/accounts/answer/32050",
             "/chrome/answer/95464",
             "/accounts/answer/39612",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986006776579-2587654661&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DDesktop",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986006776579-2587654661&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DAndroid",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986006776579-2587654661&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DiOS",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264266745383-3760000893&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DDesktop",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264266745383-3760000893&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DAndroid",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264266745383-3760000893&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DiOS",
             "/accounts/?hl=ru#topic=3382296",
             "/accounts/answer/27441?hl=ru&ref_topic=3382296",
             "/accounts/answer/32040?hl=ru&ref_topic=3382296",
@@ -277,7 +277,7 @@
          ],
          "parent_id": 10
       },
-      "http://google.ru/webhp?tab=ww": {
+      "http://google.com/webhp?tab=ww": {
          "id": 1,
          "list": [
             "http://www.google.ru/imghp?hl=ru&tab=wi",
@@ -290,11 +290,11 @@
             "https://www.google.ru/intl/ru/about/products?tab=wh",
             "http://www.google.ru/history/optout?hl=ru",
             "/preferences?hl=ru",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.ru/webhp%3Ftab%3Dww&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.com/webhp%3Ftab%3Dww&ec=GAZAAQ",
             "/advanced_search?hl=ru&authuser=0",
             "http://www.google.ru/intl/ru/services/",
             "/intl/ru/about.html",
-            "http://www.google.ru/setprefdomain?prefdom=US&sig=K_vTjMP8w1oVpoJfyvHy-KlQjGB9w%3D",
+            "http://www.google.com/setprefdomain?prefdom=RU&prev=http://www.google.ru/&sig=K_4cT1DGiM9f6kHZ7J3Sc4o1sf1xE%3D",
             "/intl/ru/policies/privacy/",
             "/intl/ru/policies/terms/"
          ],
@@ -302,7 +302,7 @@
       }
    },
    "4_level": {
-      "http://google.ru/?tab=uu": {
+      "http://google.com/?tab=uu": {
          "id": 81,
          "list": [
             "http://www.google.ru/imghp?hl=ru&tab=wi",
@@ -315,17 +315,17 @@
             "https://www.google.ru/intl/ru/about/products?tab=wh",
             "http://www.google.ru/history/optout?hl=ru",
             "/preferences?hl=ru",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.ru/%3Ftab%3Duu&ec=GAZAAQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://www.google.com/%3Ftab%3Duu&ec=GAZAAQ",
             "/advanced_search?hl=ru&authuser=0",
             "http://www.google.ru/intl/ru/services/",
             "/intl/ru/about.html",
-            "http://www.google.ru/setprefdomain?prefdom=US&sig=K_m3r_LHYpf6wslFo6gfXL_YGkNFc%3D",
+            "http://www.google.com/setprefdomain?prefdom=RU&prev=http://www.google.ru/&sig=K_29a4U-DQ2v6aG7ufokY5SFIBelY%3D",
             "/intl/ru/policies/privacy/",
             "/intl/ru/policies/terms/"
          ],
          "parent_id": 63
       },
-      "http://google.ru/accounts": {
+      "http://google.com/accounts": {
          "id": 82,
          "list": [
             "https://accounts.google.com/signin/usernamerecovery?continue=https%3A%2F%2Faccounts.google.com%2F&hl=ru",
@@ -338,7 +338,7 @@
          ],
          "parent_id": 63
       },
-      "http://google.ru/accounts/?hl=ru": {
+      "http://google.com/accounts/?hl=ru": {
          "id": 87,
          "list": [
             "https://accounts.google.com/signin/usernamerecovery?continue=https%3A%2F%2Faccounts.google.com%2F%3Fhl%3Dru&hl=ru",
@@ -351,7 +351,7 @@
          ],
          "parent_id": 63
       },
-      "http://google.ru/accounts/?hl=ru#topic=3382296": {
+      "http://google.com/accounts/?hl=ru#topic=3382296": {
          "id": 104,
          "list": [
             "https://accounts.google.com/signin/usernamerecovery?continue=https%3A%2F%2Faccounts.google.com%2F%3Fhl%3Dru&hl=ru",
@@ -364,14 +364,14 @@
          ],
          "parent_id": 63
       },
-      "http://google.ru/support/websearch?p=ws_cookies_notif&hl=ru#hcfe-content": {
+      "http://google.com/support/websearch?p=ws_cookies_notif&hl=ru#hcfe-content": {
          "id": 80,
          "list": [
             "#hcfe-content",
             "/?tab=uu",
             "/accounts",
             "https://www.google.ru/intl/ru/about/products?tab=uh",
-            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://support.google.com/accounts/answer/61416%3Fhl%3Dru%26visit_id%3D637873986025514030-855816639%26p%3Dws_cookies_notif%26rd%3D1&ec=GAZAdQ",
+            "https://accounts.google.com/ServiceLogin?hl=ru&passive=true&continue=http://support.google.com/accounts/answer/61416%3Fhl%3Dru%26visit_id%3D637874264283832933-2678158537%26p%3Dws_cookies_notif%26rd%3D1&ec=GAZAdQ",
             "/?tab=uu",
             "/",
             "/accounts/?hl=ru",
@@ -388,9 +388,9 @@
             "/accounts/answer/32050",
             "/chrome/answer/95464",
             "/accounts/answer/39612",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986025514030-855816639&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DDesktop",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986025514030-855816639&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DAndroid",
-            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637873986025514030-855816639&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DiOS",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264283832933-2678158537&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DDesktop",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264283832933-2678158537&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DAndroid",
+            "https://support.google.com/accounts/answer/61416?hl=ru&visit_id=637874264283832933-2678158537&p=ws_cookies_notif&rd=1&co=GENIE.Platform%3DiOS",
             "/accounts/?hl=ru#topic=3382296",
             "/accounts/answer/27441?hl=ru&ref_topic=3382296",
             "/accounts/answer/32040?hl=ru&ref_topic=3382296",
