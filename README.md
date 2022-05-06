@@ -2,7 +2,7 @@
 Project with Script that should create a tree of links and generate a sitemap based on this tree.
 Первичный результат таков:
 ##    Результат выполнения скрипта веб-краулера
-![](https://github.com/ZeroIsntNull/test_AVsoft/blob/master/images/results_5.jpeg)
+![](https://github.com/ZeroIsntNull/test_AVsoft/blob/master/images/results_6.jpeg)
 ### JSON - файл структуры дерева ссылок Yandex.ru - https://drive.google.com/drive/folders/1HM3JwcBoRCXUEa55gKfW1BT9gmmtU4bO?usp=sharing
 ###   Файл set_url.csv соответствует неповторяющемуся набору ссылок, которые были получены в результате выполнения запросов, а также использованные в качестве дальнейших запросов, если они соответствуют имени основного домена.
 ###   В то же время файл tree_json.json содержит в себе эти ссылки, но в древовидной структуре, имея связи между родительскими и дочерними ссылками. Среди уникальных ссылок, соответствующих основному домену, в этом файле содержатся так же ссылки на возможние сторонние ссылки других доменов, которые были получены в результате запросов по ссылкам основного домена.
