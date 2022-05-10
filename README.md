@@ -9,5 +9,5 @@ Project with Script that should create a tree of links and generate a sitemap ba
 ##    Файл tree_json.json имеет структуру следующего вида:
 ![](https://github.com/ZeroIsntNull/test_AVsoft/blob/master/images/tree_structure.jpeg)
 ##    Структура tree_json.json такова, что "parent_id" ссылки высокого уровня соответсвует "id" предшествующего уровня.
-###   В приведенном псевдопримере структуры tree_json.json рассмотрим ссылку "url_2_1" из второго уровня "2_level". Значение "parent_id" равное "2" говорит о том, что ссылка принадлежит списку ссылок "list", полученный в результате запроса по ссылке "url_2" первого уровня "1_level".
+###   В приведенном псевдопримере структуры tree_json.json рассмотрим ссылку "url_2_1" из второго уровня "2_level". Значение "parent_id" равное "2" говорит о том, что ссылка принадлежит списку ссылок "list", полученный в результате запроса по ссылке "url_2" первого уровня "1_level". 
 
